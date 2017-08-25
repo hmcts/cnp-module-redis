@@ -30,7 +30,7 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
     resource_group_name  = "contino-moj-tf-state"
     storage_account_name = "continomojtfstate"
     container_name       = "contino-moj-tfstate-container"
-    key                  = "sandbox-core-infra/sandbox/terraform.tfstate"
+    key                  = "sandbox-core-infra/dev/terraform.tfstate"
   }
 }
 
