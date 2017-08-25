@@ -30,7 +30,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'terraform validate'
                 }
 
-/*                stage('Terraform Unit Testing') {
+                stage('Terraform Unit Testing') {
                   docker.image('dsanabria/terraform_validate:latest').inside {
                     sh 'cd tests/unit && python tests.py'
                   }
@@ -43,7 +43,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'echo $TF_VAR_random_name'
                     sh 'export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin && export HOME="$WORKSPACE" && cd tests/int && kitchen test azure'
                   }
-                }*/
+                }
 
                 stage('Tagging'){
                   if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {

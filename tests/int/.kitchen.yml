@@ -1,0 +1,24 @@
+---
+driver:
+  name: terraform
+  directory: test/fixtures/tf
+
+provisioner:
+  name: terraform
+
+platforms:
+  - name: azure
+
+verifier:
+  name: terraform
+  groups:
+  - name: default-test
+    controls:
+    - azure-resource-groups
+    - azure-service-environment
+    - azure-service-plan
+    - azure-webapp
+  hostnames: contrived
+
+suites:
+  - name: default
