@@ -39,8 +39,6 @@ module "redis-paas" {
   product      = "${var.random_name}-redis-paas"
   location     = "${var.location}"
   env          = "${var.env}"
-  asename      = "${data.terraform_remote_state.core_sandbox_infrastructure.ase_name[0]}"
-  app_settings = "${var.app_settings}"
 }
 
 output "random_name" {
