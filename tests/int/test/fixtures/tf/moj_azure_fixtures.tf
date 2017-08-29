@@ -31,7 +31,12 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
     storage_account_name = "continomojtfstate"
     container_name       = "contino-moj-tfstate-container"
     key                  = "sandbox-core-infra/dev/terraform.tfstate"
+    subnetid             = "subnet_1"
   }
+}
+
+module "redis-cache" {
+
 }
 
 module "redis-paas" {
