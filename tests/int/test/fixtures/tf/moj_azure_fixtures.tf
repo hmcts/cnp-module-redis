@@ -36,7 +36,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 }
 
 data "template_file" "redistemplate" {
-  template = "${file("${path.module}/../../templates/redis-paas.json")}"
+  template = "${file("${path.module}/../../../../../templates/redis-paas.json")}"
 }
 
 resource "azurerm_template_deployment" "redis-paas" {
