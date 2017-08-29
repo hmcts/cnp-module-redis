@@ -16,7 +16,6 @@ resource "azurerm_template_deployment" "redis-paas" {
   parameters = {
     cachename = "${var.product}-${var.env}"
     location  = "${azurerm_resource_group.cache-resourcegroup.location}"
-    subnetid  = "${var.subnetid}"
     env       = "${var.env}"
   }
 }

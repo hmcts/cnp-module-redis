@@ -35,10 +35,10 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
 }
 
 module "redis-paas" {
-  source       = "../../../../../"
-  product      = "${var.random_name}-redis-paas"
-  location     = "${var.location}"
-  env          = "${var.env}"
+  source   = "../../../../../"
+  product  = "${var.random_name}-redis-paas"
+  location = "${var.location}"
+  env      = "${var.env}"
 }
 
 output "random_name" {

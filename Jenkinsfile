@@ -25,7 +25,6 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                 stage('Terraform Linting Checks'){
                     def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
                     env.PATH = "${tfHome}:${env.PATH}"
-                    sh "echo Current PATH=${env.PATH}"
                     sh 'terraform fmt --diff=true > diff.out'
                     sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found while running terraform fmt --diff=true..." && cat diff.out && exit 1; fi'
                     sh 'terraform validate'
