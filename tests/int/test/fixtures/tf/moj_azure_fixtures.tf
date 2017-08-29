@@ -35,9 +35,7 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
   }
 }
 
-module "redis-cache" {
-
-}
+module "redis-cache" {}
 
 module "redis-paas" {
   source   = "../../../../../"
