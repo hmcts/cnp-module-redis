@@ -29,12 +29,11 @@ module "cache" {
   source  = "../../../../../"
   product = "${var.random_name}"
 
-  location  = "${var.location}"
-  subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_ids[0]}"
-  env       = "${var.env}"
+  location = "${var.location}"
+  subnetid = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_ids[0]}"
+  env      = "${var.env}"
 }
 
 output "random_name" {
   value = "${var.random_name}"
 }
-
