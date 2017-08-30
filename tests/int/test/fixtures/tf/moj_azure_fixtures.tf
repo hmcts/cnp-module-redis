@@ -45,7 +45,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 # Create the subnet
 resource "azurerm_subnet" "subnet" {
-  name                 = "Inspec-Subnet"
+  name                 = "${var.random_name}-subnet-${var.env}"
   resource_group_name  = "${azurerm_resource_group.cache-resourcegroup.name}"
   virtual_network_name = "${azurerm_virtual_network.vnet.name}"
   address_prefix       = "10.1.1.0/24"

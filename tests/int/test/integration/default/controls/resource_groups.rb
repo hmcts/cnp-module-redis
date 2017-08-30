@@ -9,7 +9,7 @@ control 'azure-resource-groups' do
   impact 1.0
   title ' Check that the resource group exist'
   json_obj = json('.kitchen/kitchen-terraform/default-azure/terraform.tfstate')
-  random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-redis-paas-int'
+  random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-cache-int'
 
   describe azure_resource_group(name: random_name) do
     its('location') { should eq 'uksouth' }
