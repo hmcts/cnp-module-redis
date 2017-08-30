@@ -1,1 +1,3 @@
 *.iml
+.kitchen
+.terraform

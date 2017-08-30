@@ -22,20 +22,19 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
     storage_account_name = "continomojtfstate"
     container_name       = "contino-moj-tfstate-container"
     key                  = "sandbox-core-infra/dev/terraform.tfstate"
-    subnetid             = "sandbox-core-infra-vnet"
   }
 }
 
 module "cache" {
   source  = "../../../../../"
-  product = "${var.random_name}-cache"
+  product = "${var.random_name}"
 
-  cachename = "${var.random_name}-${var.env}"
   location  = "${var.location}"
-  subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.config.subnetid}"
+  subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_ids[0]}"
   env       = "${var.env}"
 }
 
 output "random_name" {
   value = "${var.random_name}"
 }
+
