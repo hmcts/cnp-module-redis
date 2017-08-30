@@ -27,14 +27,13 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
 }
 
 module "cache" {
-  source              = "../../../../../"
-  product             = "${var.random_name}-cache"
+  source  = "../../../../../"
+  product = "${var.random_name}-cache"
 
   cachename = "${var.random_name}-${var.env}"
   location  = "${var.location}"
   subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.config.subnetid}"
   env       = "${var.env}"
-
 }
 
 output "random_name" {
