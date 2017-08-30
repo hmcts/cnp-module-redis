@@ -15,9 +15,7 @@ verifier:
   - name: default-test
     controls:
     - azure-resource-groups
-    - azure-service-environment
-    - azure-service-plan
-    - azure-webapp
+    - azure-virtual-network
   hostnames: contrived
 
 suites:

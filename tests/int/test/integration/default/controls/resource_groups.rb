@@ -11,6 +11,7 @@ control 'azure-resource-groups' do
   json_obj = json('.kitchen/kitchen-terraform/default-azure/terraform.tfstate')
   random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-cache-int'
 
+  #require 'pry'; binding.pry;
   describe azure_resource_group(name: random_name) do
     its('location') { should eq 'uksouth' }
   end

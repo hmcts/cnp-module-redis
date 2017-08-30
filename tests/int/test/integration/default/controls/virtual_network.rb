@@ -12,7 +12,7 @@ control 'azure-virtual-network' do
   random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-vnet-int'
 
   describe azure_virtual_network(name: random_name) do
-    its('cdir') { should eq '10.1.1.0/24' }
+    its('cdir') { should eq '10.0.0.0/16' }
     its('sub_network_count') { should eq 1 }
     its('location') { should eq 'uksouth'}
   end

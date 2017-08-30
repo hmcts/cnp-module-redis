@@ -22,49 +22,21 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
     storage_account_name = "continomojtfstate"
     container_name       = "contino-moj-tfstate-container"
     key                  = "sandbox-core-infra/dev/terraform.tfstate"
-    subnetid             = "${azurerm_subnet.subnet.id}"
+    subnetid             = "sandbox-core-infra-vnet"
   }
+}
+
+module "cache" {
+  source              = "../../../../../"
+  product             = "${var.random_name}-cache"
+
+  cachename = "${var.random_name}-${var.env}"
+  location  = "${var.location}"
+  subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.config.subnetid}"
+  env       = "${var.env}"
+
 }
 
 output "random_name" {
   value = "${var.random_name}"
-}
-
-resource "azurerm_resource_group" "cache-resourcegroup" {
-  name     = "${var.random_name}-cache-${var.env}"
-  location = "${var.location}"
-}
-
-# Create the virtual network for the machines
-resource "azurerm_virtual_network" "vnet" {
-  name                = "${var.random_name}-vnet-${var.env}"
-  address_space       = ["10.1.1.0/24"]
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
-}
-
-# Create the subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "${var.random_name}-subnet-${var.env}"
-  resource_group_name  = "${azurerm_resource_group.cache-resourcegroup.name}"
-  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
-  address_prefix       = "10.1.1.0/24"
-}
-
-data "template_file" "redistemplate" {
-  template = "${file("${path.module}/../../../../../templates/redis-paas.json")}"
-}
-
-resource "azurerm_template_deployment" "redis-paas" {
-  template_body       = "${data.template_file.redistemplate.rendered}"
-  name                = "${var.random_name}-${var.env}"
-  resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
-  deployment_mode     = "Incremental"
-
-  parameters = {
-    cachename = "${var.random_name}-${var.env}"
-    location  = "${azurerm_resource_group.cache-resourcegroup.location}"
-    subnetid  = "${azurerm_subnet.subnet.id}"
-    env       = "${var.env}"
-  }
 }
