@@ -35,6 +35,22 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
   location = "${var.location}"
 }
 
+# Create the virtual network for the machines
+resource "azurerm_virtual_network" "vnet" {
+  name                = "${var.random_name}-vnet-${var.env}"
+  address_space       = ["10.1.1.0/24"]
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
+}
+
+# Create the subnet
+resource "azurerm_subnet" "subnet" {
+  name                 = "Inspec-Subnet"
+  resource_group_name  = "${azurerm_resource_group.cache-resourcegroup.name}"
+  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+  address_prefix       = "10.1.1.0/24"
+}
+
 data "template_file" "redistemplate" {
   template = "${file("${path.module}/../../../../../templates/redis-paas.json")}"
 }
