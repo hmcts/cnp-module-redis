@@ -5,7 +5,7 @@ variable "location" {
 }
 
 variable "product" {
-  default = "inspect"
+  default = "inspec"
 }
 
 variable "random_name" {}
@@ -22,7 +22,7 @@ data "terraform_remote_state" "core_sandbox_infrastructure" {
     storage_account_name = "continomojtfstate"
     container_name       = "contino-moj-tfstate-container"
     key                  = "sandbox-core-infra/dev/terraform.tfstate"
-    subnetid             = "sandbox-core-infra-subnet-0-dev"
+    subnetid             = "${azurerm_subnet.subnet.id}"
   }
 }
 
@@ -48,7 +48,7 @@ resource "azurerm_template_deployment" "redis-paas" {
   parameters = {
     cachename = "${var.random_name}-${var.env}"
     location  = "${azurerm_resource_group.cache-resourcegroup.location}"
-    subnetid  = "${data.terraform_remote_state.core_sandbox_infrastructure.config.subnetid}"
+    subnetid  = "${azurerm_subnet.subnet.id}"
     env       = "${var.env}"
   }
 }
