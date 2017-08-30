@@ -19,18 +19,3 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name = "${azurerm_virtual_network.vnet.name}"
   address_prefix       = "10.1.1.0/24"
 }
-
-# Create the NIC for the internal machine
-# Give the machine a static IP Address
-resource "azurerm_network_interface" "nic1" {
-  name                = "Inspec-NIC-1"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-
-  ip_configuration {
-    name                          = "ipConfiguration1"
-    subnet_id                     = "${azurerm_subnet.subnet.id}"
-    private_ip_address_allocation = "static"
-    private_ip_address            = "10.1.1.10"
-  }
-}
