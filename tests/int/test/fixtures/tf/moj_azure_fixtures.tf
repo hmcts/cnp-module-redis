@@ -30,7 +30,7 @@ module "cache" {
   product = "${var.random_name}"
 
   location = "${var.location}"
-  subnetid = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_ids[0]}"
+  subnetid = "${data.terraform_remote_state.core_sandbox_infrastructure.subnet_ids[1]}"
   env      = "${var.env}"
 }
 
