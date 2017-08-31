@@ -9,9 +9,20 @@ control 'azure-resource-groups' do
   impact 1.0
   title ' Check that the resource group exist'
   json_obj = json('.kitchen/kitchen-terraform/default-azure/terraform.tfstate')
-  random_name = json_obj['modules'][0]['outputs']['random_name']['value'] + '-cache-int'
+  random_prefix = json_obj['modules'][0]['outputs']['random_name']['value']
+  rgName = random_prefix+ '-cache-int'
+  redisName = random_prefix+ '-int'
 
-  describe azure_resource_group(name: random_name) do
+  describe azure_resource_group(name: rgName) do
     its('location') { should eq 'uksouth' }
   end
+
+  describe azure_resource_group(name: rgName).contains(parameter: 'name', value: redisName) do
+    it { should be true }
+  end
+
+  describe azure_resource_group(name: rgName).contains(parameter: 'type', value: 'Microsoft.Cache/Redis') do
+    it { should be true }
+  end
+
 end
