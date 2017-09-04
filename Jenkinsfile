@@ -1,13 +1,16 @@
 #!groovy
 
 GITHUB_PROTOCOL = 'https'
-GITHUB_REPO = 'www.github.com/contino/moj-module-redis/'
+GITHUB_REPO = 'github.com/contino/moj-module-redis/'
 
 properties([
     [$class       : 'GithubProjectProperty',
      projectUrlStr: "${GITHUB_PROTOCOL}://${GITHUB_REPO}"],
     pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
+
+import uk.gov.hmcts.contino.BuildHelper
+
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
                  string(credentialsId: 'tenant_id', variable: 'ARM_TENANT_ID'),
                  string(credentialsId: 'subscription_id', variable: 'ARM_SUBSCRIPTION_ID'),
@@ -23,12 +26,12 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
 
+
+        def buildHelp = new BuildHelper(this)
+
         stage('Checkout') {
           deleteDir()
           checkout scm
-          sh "echo '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}'"
-          sh "echo ${params.toString()}"
-          sh "echo ${params.projectUrlStr}"
         }
 
         stage('Terraform Linting Checks') {
@@ -48,39 +51,24 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 //          }
 //        }
 
-//        stage('Tagging') {
-//          if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-//            sh 'git tag -a 0.0.$BUILD_NUMBER -m "Jenkins"'
-//            sh "git push '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}' --tags"
-//
-//            def fetchTags = sh(script: 'git fetch "https://$TOKEN@github.com/contino/moj-module-webapp.git" --tags', returnStdout: true).split("\r?\n")
-//            /*
-//            // Not working because of old GIT version on Jenkins server that doesn't know --sort
-//            // would be most reliable solution to get last tag
-//            def lines = sh(script: 'git tag --list --sort="version:refname" -n0', returnStdout: true).split("\r?\n")
-//            println lines*/
-//
-//            def lastTagVersion = sh(script: 'git describe --tags $(git rev-list --tags --max-count=1)', returnStdout: true)
-//            println "Acquired last tag version: " + lastTagVersion
-//            def lastTagSplit = lastTagVersion.split(/\./)
-//            lastTagSplit[lastTagSplit.length - 1] = lastTagSplit[lastTagSplit.length - 1].toInteger() + 1
-//            def nextVersion = lastTagSplit.join('.')
-//
-//            if (env.BRANCH_NAME == 'master' &&
-//                (currentBuild.result == null || currentBuild.result == 'SUCCESS')) {
-//
-//              println "Will tag with version: " + nextVersion
-//              sh "git tag -a $nextVersion -m \"Jenkins\""
-//              sh 'git push "https://$TOKEN@github.com/contino/moj-module-redis.git" --tags'
-//            } else
-//              println "Not on 'master' branch otherwise would have tagged with version: " + nextVersion
-//
-//          }
-//      }
+        stage('Tagging') {
+
+          def tag = buildHelp.nextTag()
+
+          if (env.BRANCH_NAME == 'master' &&
+              (currentBuild.result == null || currentBuild.result == 'SUCCESS')) {
+
+            println "Will tag with version: " + tag
+            sh "git tag -a $tag -m \"Jenkins\""
+            sh "git push '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}' --tags"
+          } else
+            println "Not on 'master' branch! Next succesfull build on master will be tagged with: " + tag
+
+        }
+      }
     }
   }
-}
-catch (err) {
-  throw err
-}
+  catch (err) {
+    throw err
+  }
 }
