@@ -38,50 +38,43 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
           sh 'terraform validate'
         }
 
-        /*
-        stage('Terraform Unit Testing') {
-          docker.image('dsanabria/terraform_validate:latest').inside {
-            sh 'cd tests/unit && python tests.py'
-          }
-        }
-        */
+//        stage('Terraform Integration Testing') {
+//          sh 'date|md5sum|base64|head -c 6 > .random_string'
+//          RANDOM_STRING = readFile '.random_string'
+//          docker.image('contino/inspec-azure:latest').inside("-e TF_VAR_random_name=inspec${RANDOM_STRING}") {
+//            sh 'echo $TF_VAR_random_name'
+//            sh 'export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin && export HOME="$WORKSPACE" && cd tests/int && kitchen test azure'
+//          }
+//        }
 
-        stage('Terraform Integration Testing') {
-          sh 'date|md5sum|base64|head -c 6 > .random_string'
-          RANDOM_STRING = readFile '.random_string'
-          docker.image('contino/inspec-azure:latest').inside("-e TF_VAR_random_name=inspec${RANDOM_STRING}") {
-            sh 'echo $TF_VAR_random_name'
-            sh 'export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin && export HOME="$WORKSPACE" && cd tests/int && kitchen test azure'
-          }
-        }
-        stage('Tagging') {
-          if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-            sh 'git tag -a 0.0.$BUILD_NUMBER -m "Jenkins"'
-            sh "git push '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}' --tags"
-
-            def fetchTags = sh(script: 'git fetch "https://$TOKEN@github.com/contino/moj-module-webapp.git" --tags', returnStdout: true).split("\r?\n")
-            /*
-            // Not working because of old GIT version on Jenkins server that doesn't know --sort
-            // would be most reliable solution to get last tag
-            def lines = sh(script: 'git tag --list --sort="version:refname" -n0', returnStdout: true).split("\r?\n")
-            println lines*/
-
-            def lastTagVersion = sh(script: 'git describe --tags $(git rev-list --tags --max-count=1)', returnStdout: true)
-            println "Acquired last tag version: " + lastTagVersion
-            def lastTagSplit = lastTagVersion.split(/\./)
-            lastTagSplit[lastTagSplit.length - 1] = lastTagSplit[lastTagSplit.length - 1].toInteger() + 1
-            def nextVersion = lastTagSplit.join('.')
-
-            if (env.BRANCH_NAME == 'master' &&
-                (currentBuild.result == null || currentBuild.result == 'SUCCESS')) {
-
-              println "Will tag with version: " + nextVersion
-              sh "git tag -a $nextVersion -m \"Jenkins\""
-              sh 'git push "https://$TOKEN@github.com/contino/moj-module-redis.git" --tags'
-            } else
-              println "Not on 'master' branch otherwise would have tagged with version: " + nextVersion
-
-          }
+//        stage('Tagging') {
+//          if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+//            sh 'git tag -a 0.0.$BUILD_NUMBER -m "Jenkins"'
+//            sh "git push '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}' --tags"
+//
+//            def fetchTags = sh(script: 'git fetch "https://$TOKEN@github.com/contino/moj-module-webapp.git" --tags', returnStdout: true).split("\r?\n")
+//            /*
+//            // Not working because of old GIT version on Jenkins server that doesn't know --sort
+//            // would be most reliable solution to get last tag
+//            def lines = sh(script: 'git tag --list --sort="version:refname" -n0', returnStdout: true).split("\r?\n")
+//            println lines*/
+//
+//            def lastTagVersion = sh(script: 'git describe --tags $(git rev-list --tags --max-count=1)', returnStdout: true)
+//            println "Acquired last tag version: " + lastTagVersion
+//            def lastTagSplit = lastTagVersion.split(/\./)
+//            lastTagSplit[lastTagSplit.length - 1] = lastTagSplit[lastTagSplit.length - 1].toInteger() + 1
+//            def nextVersion = lastTagSplit.join('.')
+//
+//            if (env.BRANCH_NAME == 'master' &&
+//                (currentBuild.result == null || currentBuild.result == 'SUCCESS')) {
+//
+//              println "Will tag with version: " + nextVersion
+//              sh "git tag -a $nextVersion -m \"Jenkins\""
+//              sh 'git push "https://$TOKEN@github.com/contino/moj-module-redis.git" --tags'
+//            } else
+//              println "Not on 'master' branch otherwise would have tagged with version: " + nextVersion
+//
+//          }
         }
       }
     }
