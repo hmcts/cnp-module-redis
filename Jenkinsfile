@@ -22,6 +22,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
     node {
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
+
         stage('Checkout') {
           deleteDir()
           checkout scm
@@ -75,11 +76,11 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 //              println "Not on 'master' branch otherwise would have tagged with version: " + nextVersion
 //
 //          }
-        }
-      }
+//      }
     }
   }
-  catch (err) {
-    throw err
-  }
+}
+catch (err) {
+  throw err
+}
 }
