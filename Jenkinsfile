@@ -27,7 +27,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
           deleteDir()
           checkout scm
           sh "echo '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}'"
-          sh "echo ${params}"
+          sh "echo ${params.toString()}"
           sh "echo ${params.projectUrlStr}"
         }
 
