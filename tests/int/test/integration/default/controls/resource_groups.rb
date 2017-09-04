@@ -25,4 +25,11 @@ control 'azure-resource-groups' do
     it { should be true }
   end
 
+  desc "Checking for existence of 'Microsoft.Cache/Redis' module"
+  describe azure_resource_group(name: rgName).return_resource(parameter: 'type', value: 'Microsoft.Cache/Redis') do
+    it { should_not be nil }
+    its('name') { should eq redisName }
+    its('properties') {  }
+  end
+
 end

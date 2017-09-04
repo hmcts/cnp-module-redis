@@ -15,6 +15,7 @@ verifier:
   - name: default-test
     controls:
     - azure-resource-groups
+    - azure-redis-conn
   hostnames: contrived
 
 suites:
