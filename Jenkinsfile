@@ -26,24 +26,26 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
                     env.PATH = "${tfHome}:${env.PATH}"
                     sh 'terraform fmt --diff=true > diff.out'
-                    sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found ..." && cat diff.out && exit 1; fi'
+                    sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found while running terraform fmt --diff=true..." && cat diff.out && exit 1; fi'
                     sh 'terraform validate'
                 }
 
-/*                stage('Terraform Unit Testing') {
+                /*
+                stage('Terraform Unit Testing') {
                   docker.image('dsanabria/terraform_validate:latest').inside {
                     sh 'cd tests/unit && python tests.py'
                   }
                 }
+                */
 
                 stage('Terraform Integration Testing') {
                   sh 'date|md5sum|base64|head -c 6 > .random_string'
                   RANDOM_STRING = readFile '.random_string'
-                  docker.image('dsanabria/azkitchentdi:latest').inside("-e TF_VAR_random_name=inspec${RANDOM_STRING}") {
+                  docker.image('contino/inspec-azure:latest').inside("-e TF_VAR_random_name=inspec${RANDOM_STRING}") {
                     sh 'echo $TF_VAR_random_name'
                     sh 'export PATH=$PATH:/usr/local/bundle/bin:/usr/local/bin && export HOME="$WORKSPACE" && cd tests/int && kitchen test azure'
                   }
-                }*/
+                }
 
                 stage('Tagging'){
                   if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
