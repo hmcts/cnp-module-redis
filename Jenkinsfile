@@ -12,9 +12,6 @@ properties([
 @Library('Infrastructure@branchbuilds')
 import uk.gov.hmcts.contino.BuildUtils
 
-BuildUtils utils = new BuildUtils(this)
-
-
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
                  string(credentialsId: 'tenant_id', variable: 'ARM_TENANT_ID'),
                  string(credentialsId: 'subscription_id', variable: 'ARM_SUBSCRIPTION_ID'),
@@ -30,6 +27,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
 
+        BuildUtils utils = new BuildUtils(this)
 
         stage('Checkout') {
           deleteDir()
