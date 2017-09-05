@@ -10,9 +10,9 @@ properties([
 ])
 
 @Library('Infrastructure@branchbuilds')
-import uk.gov.hmcts.contino.BuildHelper
+import uk.gov.hmcts.contino.BuildUtils
 
-BuildHelper buildHelp = new BuildHelper(this)
+BuildUtils utils = new BuildUtils(this)
 
 
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
@@ -54,8 +54,8 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 //        }
 
         stage('Tagging') {
-          tag = buildHelp.nextTag()
-          buildHelp.tag(tag)
+          tag = utils.nextTag()
+          utils.tag(tag)
         }
       }
     }
