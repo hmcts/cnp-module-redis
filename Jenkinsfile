@@ -1,4 +1,6 @@
 #!groovy
+@Library('Infrastructure@branchbuilds')
+import uk.gov.hmcts.contino.BuildUtils
 
 GITHUB_PROTOCOL = "https"
 GITHUB_REPO = "github.com/contino/moj-module-redis/"
@@ -8,9 +10,6 @@ properties([
      projectUrlStr: "${GITHUB_PROTOCOL}://${GITHUB_REPO}"],
     pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
-
-@Library('Infrastructure@branchbuilds')
-import uk.gov.hmcts.contino.BuildUtils
 
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
                  string(credentialsId: 'tenant_id', variable: 'ARM_TENANT_ID'),
@@ -52,8 +51,9 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 //        }
 
         stage('Tagging') {
-          tag = utils.nextTag()
-          utils.tag(tag)
+          String tag = utils.nextTag()
+          String result = utils.applyTag(tag)
+          sh 'echo $result'
         }
       }
     }
