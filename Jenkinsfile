@@ -1,7 +1,7 @@
 #!groovy
 
-GITHUB_PROTOCOL = 'https'
-GITHUB_REPO = 'github.com/contino/moj-module-redis/'
+GITHUB_PROTOCOL = "https"
+GITHUB_REPO = "github.com/contino/moj-module-redis/"
 
 properties([
     [$class       : 'GithubProjectProperty',
@@ -11,6 +11,9 @@ properties([
 
 @Library('Infrastructure@try-jenkins-improvements')
 import uk.gov.hmcts.contino.BuildHelper
+
+BuildHelper buildHelp = new BuildHelper(this)
+
 
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
                  string(credentialsId: 'tenant_id', variable: 'ARM_TENANT_ID'),
@@ -27,8 +30,6 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
 
-
-        def buildHelp = new BuildHelper(this)
 
         stage('Checkout') {
           deleteDir()
