@@ -9,7 +9,7 @@ properties([
     pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
-@Library('Infrastructure@try-jenkins-improvements')
+@Library('Infrastructure@branchbuilds')
 import uk.gov.hmcts.contino.BuildHelper
 
 BuildHelper buildHelp = new BuildHelper(this)
