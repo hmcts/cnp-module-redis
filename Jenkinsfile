@@ -53,7 +53,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
         stage('Tagging') {
           String tag = utils.nextTag()
           String result = utils.applyTag(tag)
-          sh 'echo $result'
+          sh "echo $result"
         }
       }
     }
