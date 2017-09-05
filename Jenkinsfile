@@ -9,6 +9,7 @@ properties([
     pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
+@Library('Infrastructure@try-jenkins-improvements')
 import uk.gov.hmcts.contino.BuildHelper
 
 withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
@@ -52,18 +53,8 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 //        }
 
         stage('Tagging') {
-
-          def tag = buildHelp.nextTag()
-
-          if (env.BRANCH_NAME == 'master' &&
-              (currentBuild.result == null || currentBuild.result == 'SUCCESS')) {
-
-            println "Will tag with version: " + tag
-            sh "git tag -a $tag -m \"Jenkins\""
-            sh "git push '${GITHUB_PROTOCOL}://${TOKEN}@${GITHUB_REPO}' --tags"
-          } else
-            println "Not on 'master' branch! Next succesfull build on master will be tagged with: " + tag
-
+          tag = buildHelp.nextTag()
+          buildHelp.tag(tag)
         }
       }
     }
