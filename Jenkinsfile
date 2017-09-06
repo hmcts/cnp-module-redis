@@ -23,13 +23,12 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                  string(credentialsId: 'kitchen_subscription_id', variable: 'AZURE_SUBSCRIPTION_ID'),
                  string(credentialsId: 'kitchen_client_id', variable: 'AZURE_CLIENT_ID')]) {
   try {
-
-    def terraform = new Terraform(this)
-    def utils = new BuildUtils(this)
-
     node {
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
+
+        def terraform = new Terraform(this)
+        def utils = new BuildUtils(this)
 
         stage('Checkout') {
           deleteDir()
