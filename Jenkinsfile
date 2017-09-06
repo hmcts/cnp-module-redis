@@ -36,6 +36,10 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
           terraform.lint()
         }
 
+        stage('Terraform Integration Testing') {
+          new BuildUtils(this).moduleIntegrationTests()
+        }
+
         stage('Tagging') {
           def utils = new BuildUtils(this)
           String result = utils.applyTag(utils.nextTag())
