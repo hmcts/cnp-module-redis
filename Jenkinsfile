@@ -1,7 +1,6 @@
 #!groovy
 @Library('Infrastructure@helpers-for-jenkins-test-steps')
-import uk.gov.hmcts.contino.BuildUtils
-import uk.gov.hmcts.contino.Terraform
+import uk.gov.hmcts.contino.*
 
 GITHUB_PROTOCOL = "https"
 GITHUB_REPO = "github.com/contino/moj-module-redis/"
@@ -27,19 +26,18 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
 
-        def terraform = new Terraform(this)
-        def utils = new BuildUtils(this)
-
         stage('Checkout') {
           deleteDir()
           checkout scm
         }
 
         stage('Terraform Linting Checks') {
+          def terraform = new Terraform(this)
           terraform.lint()
         }
 
         stage('Tagging') {
+          def utils = new BuildUtils(this)
           String result = utils.applyTag(utils.nextTag())
           sh "echo $result"
         }
