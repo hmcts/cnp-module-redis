@@ -1,6 +1,7 @@
 #!groovy
-@Library('Infrastructure@branchbuilds')
+@Library('Infrastructure@helpers-for-jenkins-test-steps')
 import uk.gov.hmcts.contino.BuildUtils
+import uk.gov.hmcts.contino.Terraform
 
 GITHUB_PROTOCOL = "https"
 GITHUB_REPO = "github.com/contino/moj-module-redis/"
@@ -26,7 +27,8 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
       withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
                "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
 
-        BuildUtils utils = new BuildUtils(this)
+        def terraform = new Terraform(this)
+        def utils = new BuildUtils(this)
 
         stage('Checkout') {
           deleteDir()
@@ -34,11 +36,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
         }
 
         stage('Terraform Linting Checks') {
-          def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-          env.PATH = "${tfHome}:${env.PATH}"
-          sh 'terraform fmt --diff=true > diff.out'
-          sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found while running terraform fmt --diff=true..." && cat diff.out && exit 1; fi'
-          sh 'terraform validate'
+          terraform.lint()
         }
 
 //        stage('Terraform Integration Testing') {
