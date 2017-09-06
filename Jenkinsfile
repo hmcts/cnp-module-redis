@@ -1,6 +1,7 @@
 #!groovy
-@Library('Infrastructure@helpers-for-jenkins-test-steps')
+@Library('Infrastructure')
 import uk.gov.hmcts.contino.BuildUtils
+@Library('Infrastructure@helpers-for-jenkins-test-steps')
 import uk.gov.hmcts.contino.Terraform
 
 GITHUB_PROTOCOL = "https"
