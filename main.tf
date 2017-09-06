@@ -8,15 +8,15 @@ data "template_file" "redistemplate" {
 }
 
 resource "azurerm_template_deployment" "redis-paas" {
-  template_body       = "${data.template_file.redistemplate.rendered}"
-  name                = "${var.product}-${var.env}"
-  resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
-  deployment_mode     = "Incremental"
+      template_body       = "${data.template_file.redistemplate.rendered}"
+      name                = "${var.product}-${var.env}"
+      resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
+      deployment_mode     = "Incremental"
 
   parameters = {
-    cachename = "${var.product}-${var.env}"
-    location  = "${azurerm_resource_group.cache-resourcegroup.location}"
-    subnetid  = "${var.subnetid}"
-    env       = "${var.env}"
+      cachename = "${var.product}-${var.env}"
+      location  = "${azurerm_resource_group.cache-resourcegroup.location}"
+      subnetid  = "${var.subnetid}"
+      env       = "${var.env}"
   }
 }
