@@ -37,11 +37,11 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
         }
 
         stage('Terraform Integration Testing') {
-          new BuildUtils(this).moduleIntegrationTests()
+          new Testing(this).moduleIntegrationTests()
         }
 
         stage('Tagging') {
-          def utils = new BuildUtils(this)
+          def tag = new Tagging(this)
           String result = utils.applyTag(utils.nextTag())
           sh "echo $result"
         }
