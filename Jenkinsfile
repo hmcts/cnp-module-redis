@@ -1,5 +1,5 @@
 #!groovy
-@Library('Infrastructure@helpers-for-jenkins-test-steps')
+@Library('Infrastructure')
 import uk.gov.hmcts.contino.*
 
 GITHUB_PROTOCOL = "https"
