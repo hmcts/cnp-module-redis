@@ -42,7 +42,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
 
         stage('Tagging') {
           def tag = new Tagging(this)
-          String result = utils.applyTag(utils.nextTag())
+          String result = tag.applyTag(tag.nextTag())
           sh "echo $result"
         }
       }
