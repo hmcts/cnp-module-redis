@@ -25,7 +25,8 @@ try {
       stage('Terraform Linting Checks') {
         terraform.lint()
       }
-
+      
+      testLib = new Testing(this)
       stage('Terraform Integration Testing') {
         terraform.moduleIntegrationTests()
       }
