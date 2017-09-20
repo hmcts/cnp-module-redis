@@ -1,6 +1,7 @@
 #!groovy
-@Library('Infrastructure')
-import uk.gov.hmcts.contino.*
+@Library('Infrastructure') _
+import uk.gov.hmcts.contino.Testing
+import uk.gov.hmcts.contino.Tagging
 
 GITHUB_PROTOCOL = "https"
 GITHUB_REPO = "github.com/contino/moj-module-redis/"
@@ -11,44 +12,32 @@ properties([
     pipelineTriggers([[$class: 'GitHubPushTrigger']])
 ])
 
-withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECRET'),
-                 string(credentialsId: 'tenant_id', variable: 'ARM_TENANT_ID'),
-                 string(credentialsId: 'subscription_id', variable: 'ARM_SUBSCRIPTION_ID'),
-                 string(credentialsId: 'object_id', variable: 'ARM_CLIENT_ID'),
-                 string(credentialsId: 'kitchen_github', variable: 'TOKEN'),
-                 string(credentialsId: 'kitchen_github', variable: 'TF_VAR_token'),
-                 string(credentialsId: 'kitchen_client_secret', variable: 'AZURE_CLIENT_SECRET'),
-                 string(credentialsId: 'kitchen_tenant_id', variable: 'AZURE_TENANT_ID'),
-                 string(credentialsId: 'kitchen_subscription_id', variable: 'AZURE_SUBSCRIPTION_ID'),
-                 string(credentialsId: 'kitchen_client_id', variable: 'AZURE_CLIENT_ID')]) {
-  try {
-    node {
-      withEnv(["GIT_COMMITTER_NAME=jenkinsmoj",
-               "GIT_COMMITTER_EMAIL=jenkinsmoj@contino.io"]) {
+try {
+  node {
+    platformSetup {
 
-        stage('Checkout') {
-          deleteDir()
-          checkout scm
-        }
+      stage('Checkout') {
+        deleteDir()
+        checkout scm
+      }
 
-        stage('Terraform Linting Checks') {
-          def terraform = new Terraform(this)
-          terraform.lint()
-        }
+      terraform.ini(this)
+      stage('Terraform Linting Checks') {
+        terraform.lint()
+      }
 
-        stage('Terraform Integration Testing') {
-          new Testing(this).moduleIntegrationTests()
-        }
+      stage('Terraform Integration Testing') {
+        terraform.moduleIntegrationTests()
+      }
 
-        stage('Tagging') {
-          def tag = new Tagging(this)
-          String result = tag.applyTag(tag.nextTag())
-          sh "echo $result"
-        }
+      stage('Tagging') {
+        def tag = new Tagging(this)
+        printf tag.applyTag(tag.nextTag())
       }
     }
   }
-  catch (err) {
-    throw err
-  }
 }
+catch (err) {
+  throw err
+}
+
