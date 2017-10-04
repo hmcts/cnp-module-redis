@@ -29,6 +29,9 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found while running terraform fmt --diff=true..." && cat diff.out && exit 1; fi'
                     sh 'terraform validate'
                 }
+
+              
+
                 stage('Terraform Integration Testing') {
                   sh 'date|md5sum|base64|head -c 6 > .random_string'
                   RANDOM_STRING = readFile '.random_string'
@@ -41,7 +44,7 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                 stage('Tagging'){
                   if (env.BRANCH_NAME == 'master' && currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                     sh 'git tag -a 0.0.$BUILD_NUMBER -m "Jenkins"'
-                    sh 'git push origin --tag
+                    sh 'git push "https://$TOKEN@github.com/contino/moj-module-redis.git" --tags'
                   }
                 }
             }
