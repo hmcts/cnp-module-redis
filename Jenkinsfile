@@ -29,15 +29,6 @@ withCredentials([string(credentialsId: 'sp_password', variable: 'ARM_CLIENT_SECR
                     sh 'if [ ! -s diff.out ]; then echo "Initial Linting OK ..."; else echo "Linting errors found while running terraform fmt --diff=true..." && cat diff.out && exit 1; fi'
                     sh 'terraform validate'
                 }
-
-                /*
-                stage('Terraform Unit Testing') {
-                  docker.image('dsanabria/terraform_validate:latest').inside {
-                    sh 'cd tests/unit && python tests.py'
-                  }
-                }
-                */
-
                 stage('Terraform Integration Testing') {
                   sh 'date|md5sum|base64|head -c 6 > .random_string'
                   RANDOM_STRING = readFile '.random_string'
