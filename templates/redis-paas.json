@@ -52,7 +52,7 @@
     "outputs": {
         "accessKey": {
             "type": "object",
-            "value": "[listKeys( parameters('cacheName'),'2016-04-01').primaryKey]"
+            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', parameters('cacheName')), '2015-08-01').primaryKey]"
         }
       }
 }
