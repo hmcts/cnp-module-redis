@@ -51,7 +51,7 @@
     ],
     "outputs": {
         "accessKey": {
-            "type": "object",
+            "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Cache/Redis', parameters('cacheName')), '2015-08-01').primaryKey]"
         }
       }
