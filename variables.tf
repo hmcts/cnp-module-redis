@@ -16,5 +16,5 @@ variable "subnetid" {
 
 variable "redis_port" {
   type    = "string"
-  default = "6379"
+  default = "6380"
 }
