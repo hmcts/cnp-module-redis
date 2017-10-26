@@ -13,8 +13,3 @@ variable "env" {
 variable "subnetid" {
   type = "string"
 }
-
-variable "redis_port" {
-  type    = "string"
-  default = "6380"
-}

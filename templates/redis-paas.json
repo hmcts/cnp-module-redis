@@ -48,5 +48,19 @@
             },
             "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+        "accessKey": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', parameters('cacheName')), '2015-08-01').primaryKey]"
+        },
+        "hostName": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Cache/Redis', parameters('cacheName')), '2015-08-01').hostName]"
+        },
+        "sslPort": {
+            "type": "int",
+            "value": "[reference(resourceId('Microsoft.Cache/Redis', parameters('cacheName')), '2015-08-01').sslPort]"
+        }
+      }
 }
