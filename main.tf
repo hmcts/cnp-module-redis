@@ -1,6 +1,10 @@
 resource "azurerm_resource_group" "cache-resourcegroup" {
   name     = "${var.product}-cache-${var.env}"
   location = "${var.location}"
+
+  tags {
+    environment = "${var.env}"
+  }
 }
 
 data "template_file" "redistemplate" {
