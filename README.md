@@ -32,7 +32,7 @@ module "redis-cache" {
   product  = "${var.product}"
   location = "${var.location}"
   env      = "${var.env}"
-  subnetid = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[2]}"
+  subnetid = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[1]}"
 }
 
 module "frontend" {
