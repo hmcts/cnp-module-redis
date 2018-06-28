@@ -2,9 +2,9 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
   name     = "${var.product}-cache-${var.env}"
   location = "${var.location}"
 
-  tags {
-    environment = "${var.env}"
-  }
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+    )}"
 }
 
 data "template_file" "redistemplate" {

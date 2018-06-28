@@ -13,3 +13,8 @@ variable "env" {
 variable "subnetid" {
   type = "string"
 }
+
+variable "common_tags" {
+  type = "map"
+  default = {}
+}
