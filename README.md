@@ -12,6 +12,7 @@ The following parameters are required by the module
 -	`location` this is the azure region for this service
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `subnetid` the id of the subnet in which to create the Redis instance
+- `common_tags` tags that need to be applied to every resource group, passed through by the jenkins-library
 
 ### Output
 
@@ -28,19 +29,21 @@ the host, port and access key as environment variables in another module.
 
 ```terraform
 module "redis-cache" {
-  source   = "git@github.com:contino/moj-module-redis?ref=master"
-  product  = "${var.product}"
-  location = "${var.location}"
-  env      = "${var.env}"
-  subnetid = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[2]}"
+  source      = "git@github.com:contino/moj-module-redis?ref=master"
+  product     = "${var.product}"
+  location    = "${var.location}"
+  env         = "${var.env}"
+  subnetid    = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[2]}"
+  common_tags = "${var.common_tags}"
 }
 
 module "frontend" {
-  source   = "git@github.com:contino/moj-module-webapp?ref=0.0.78"
-  product  = "${var.product}-frontend"
-  location = "${var.location}"
-  env      = "${var.env}"
-  asename  = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  source      = "git@github.com:contino/moj-module-webapp?ref=0.0.78"
+  product     = "${var.product}-frontend"
+  location    = "${var.location}"
+  env         = "${var.env}"
+  asename     = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
+  common_tags = "${var.common_tags}"
 
   app_settings = {
     REDIS_HOST                   = "${module.redis-cache.host_name}"

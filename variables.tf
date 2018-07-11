@@ -16,5 +16,4 @@ variable "subnetid" {
 
 variable "common_tags" {
   type = "map"
-  default = {}
 }
