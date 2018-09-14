@@ -19,7 +19,7 @@
         },
         "teamName":{
           "type": "string"
-        }	        }
+        }
     },
     "variables": {},
     "resources": [
