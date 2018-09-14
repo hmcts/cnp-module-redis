@@ -22,5 +22,6 @@ resource "azurerm_template_deployment" "redis-paas" {
     location  = "${azurerm_resource_group.cache-resourcegroup.location}"
     subnetid  = "${var.subnetid}"
     env       = "${var.env}"
+    teamName  = "${lookup(var.common_tags, "Team Name")}"
   }
 }
