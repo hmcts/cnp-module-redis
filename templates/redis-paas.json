@@ -16,9 +16,6 @@
             "metadata": {
                 "description": "The tag"
             }
-        },
-        "teamName":{
-          "type": "string"
         }
     },
     "variables": {},
@@ -30,8 +27,7 @@
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "Redis Cache",
-                "environment": "[parameters('env')]",
-                "Team Name": "[parameters('teamName')]"
+                "environment": "[parameters('env')]"
             },
             "scale": null,
             "properties": {
