@@ -29,7 +29,7 @@ the host, port and access key as environment variables in another module.
 
 ```terraform
 module "redis-cache" {
-  source      = "git@github.com:contino/moj-module-redis?ref=master"
+  source      = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product     = "${var.product}"
   location    = "${var.location}"
   env         = "${var.env}"
