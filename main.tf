@@ -2,9 +2,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
   name     = "${var.product}-cache-${var.env}"
   location = "${var.location}"
 
-  tags = "${merge(var.common_tags,
-    map("lastUpdated", "${timestamp()}")
-  )}"
+  tags = "${var.common_tags}"
 }
 
 resource "azurerm_redis_cache" "redis" {
