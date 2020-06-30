@@ -17,3 +17,29 @@ variable "subnetid" {
 variable "common_tags" {
   type = "map"
 }
+
+variable "minimum_tls_version" {
+  type = "string"
+  default = "1.2"
+}
+
+variable "capacity" {
+  default = "1"
+}
+
+variable "maxmemory_policy" {
+  type = "string"
+  default = "volatile-lru"
+}
+
+variable "maxmemory_reserved" {
+  default = "200"
+}
+
+variable "maxfragmentationmemory_reserved" {
+  default = "300"
+}
+
+variable "maxmemory_delta" {
+  default = "200"
+}
