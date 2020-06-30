@@ -20,7 +20,7 @@ variable "common_tags" {
 
 variable "minimum_tls_version" {
   type = "string"
-  default = "1.0"
+  default = "1.2"
 }
 
 variable "capacity" {
