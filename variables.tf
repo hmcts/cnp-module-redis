@@ -43,3 +43,11 @@ variable "maxfragmentationmemory_reserved" {
 variable "maxmemory_delta" {
   default = "200"
 }
+
+variable "family" {
+  default = "P"
+}
+
+variable "sku_name" {
+  default = "Premium"
+}

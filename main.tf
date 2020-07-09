@@ -10,8 +10,8 @@ resource "azurerm_redis_cache" "redis" {
   location            = "${azurerm_resource_group.cache-resourcegroup.location}"
   resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
   capacity            = "${var.capacity}"
-  family              = "P"
-  sku_name            = "Premium"
+  family              = "${var.family}"
+  sku_name            = "${var.sku_name}"
   subnet_id           = "${var.subnetid}"
   enable_non_ssl_port = false
   minimum_tls_version = "${var.minimum_tls_version}"
