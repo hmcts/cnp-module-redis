@@ -24,7 +24,7 @@ resource "azurerm_redis_cache" "redis" {
   }
 
   timeouts {
-    create = "20 minutes"
+    create = "20m"
   }
 
   tags = "${var.common_tags}"
