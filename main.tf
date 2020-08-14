@@ -23,5 +23,9 @@ resource "azurerm_redis_cache" "redis" {
     maxmemory_policy = "${var.maxmemory_policy}"
   }
 
+  timeouts {
+    create = 20
+  }
+
   tags = "${var.common_tags}"
 }
