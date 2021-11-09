@@ -1,4 +1,4 @@
-# moj-module-redis
+# cnp-module-redis
 
 This repository contains the module that enables you to create a Redis PaaS instance.
 
