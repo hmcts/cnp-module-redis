@@ -1,25 +1,25 @@
 variable "product" {
-  type = "string"
+  type = string
 }
 
 variable "location" {
-  type = "string"
+  type = string
 }
 
 variable "env" {
-  type = "string"
+  type = string
 }
 
 variable "subnetid" {
-  type = "string"
+  type = string
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
 }
 
 variable "minimum_tls_version" {
-  type = "string"
+  type    = string
   default = "1.2"
 }
 
@@ -28,7 +28,7 @@ variable "capacity" {
 }
 
 variable "maxmemory_policy" {
-  type = "string"
+  type    = string
   default = "volatile-lru"
 }
 

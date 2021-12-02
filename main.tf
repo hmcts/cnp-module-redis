@@ -1,27 +1,27 @@
 resource "azurerm_resource_group" "cache-resourcegroup" {
   name     = "${var.product}-cache-${var.env}"
-  location = "${var.location}"
+  location = var.location
 
-  tags = "${var.common_tags}"
+  tags = var.common_tags
 }
 
 resource "azurerm_redis_cache" "redis" {
   name                = "${var.product}-${var.env}"
-  location            = "${azurerm_resource_group.cache-resourcegroup.location}"
-  resource_group_name = "${azurerm_resource_group.cache-resourcegroup.name}"
-  capacity            = "${var.capacity}"
+  location            = azurerm_resource_group.cache-resourcegroup.location
+  resource_group_name = azurerm_resource_group.cache-resourcegroup.name
+  capacity            = var.capacity
   family              = "P"
   sku_name            = "Premium"
-  subnet_id           = "${var.subnetid}"
+  subnet_id           = var.subnetid
   enable_non_ssl_port = false
-  minimum_tls_version = "${var.minimum_tls_version}"
+  minimum_tls_version = var.minimum_tls_version
 
   redis_configuration {
-    maxmemory_reserved              = "${var.maxmemory_reserved}"
-    maxfragmentationmemory_reserved = "${var.maxfragmentationmemory_reserved}"
-    maxmemory_delta                 = "${var.maxmemory_delta}"
-    maxmemory_policy = "${var.maxmemory_policy}"
+    maxmemory_reserved              = var.maxmemory_reserved
+    maxfragmentationmemory_reserved = var.maxfragmentationmemory_reserved
+    maxmemory_delta                 = var.maxmemory_delta
+    maxmemory_policy                = var.maxmemory_policy
   }
 
-  tags = "${var.common_tags}"
+  tags = var.common_tags
 }
