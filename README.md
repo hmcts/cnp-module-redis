@@ -28,27 +28,24 @@ The following example shows how to use the module to create a Redis PaaS instanc
 the host, port and access key as environment variables in another module.
 
 ```terraform
-module "redis-cache" {
-  source      = "git@github.com:contino/moj-module-redis?ref=master"
-  product     = "${var.product}"
-  location    = "${var.location}"
-  env         = "${var.env}"
-  subnetid    = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[2]}"
-  common_tags = "${var.common_tags}"
+data "azurerm_subnet" "subnet" {
+  name                 = "core-infra-subnet-1-${var.env}"
+  virtual_network_name = "core-infra-vnet-${var.env}"
+  resource_group_name  = "core-infra-${var.env}"
 }
 
-module "frontend" {
-  source      = "git@github.com:contino/moj-module-webapp?ref=0.0.78"
-  product     = "${var.product}-frontend"
-  location    = "${var.location}"
-  env         = "${var.env}"
-  asename     = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
-  common_tags = "${var.common_tags}"
+module "redis-cache" {
+  source      = "git@github.com:contino/cnp-module-redis?ref=master"
+  product     = var.product
+  location    = var.location
+  env         = var.env
+  subnetid    = data.azurerm_subnet.core_infra_redis_subnet.id
+  common_tags = var.common_tags
+}
 
-  app_settings = {
-    REDIS_HOST                   = "${module.redis-cache.host_name}"
-    REDIS_PORT                   = "${module.redis-cache.redis_port}"
-    REDIS_PASSWORD               = "${module.redis-cache.access_key}"
-  }
+resource "azurerm_key_vault_secret" "redis_access_key" {
+  name         = "redis-access-key"
+  value        = module.redis-activity-service.access_key
+  key_vault_id = data.azurerm_key_vault.vault.id
 }
 ```
