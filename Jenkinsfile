@@ -15,7 +15,7 @@ try {
     }
 
     stage('Terraform Linting Checks') {
-      sh 'terraform validate -check-variables=false -no-color'
+      sh 'terraform fmt -check=true'
     }
   }
 }
