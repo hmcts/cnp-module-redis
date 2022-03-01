@@ -4,7 +4,7 @@ resource "azurerm_monitor_diagnostic_setting" "redis-ds" {
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
   log {
-    category = "AuditEvent"
+    category = "ConnectedClientList"
 
     retention_policy {
       enabled = true
