@@ -43,3 +43,7 @@ variable "maxfragmentationmemory_reserved" {
 variable "maxmemory_delta" {
   default = "200"
 }
+
+variable "zones" {
+  default = [ "1" ]
+}

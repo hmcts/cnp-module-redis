@@ -15,6 +15,7 @@ resource "azurerm_redis_cache" "redis" {
   subnet_id           = var.subnetid
   enable_non_ssl_port = false
   minimum_tls_version = var.minimum_tls_version
+  zones               = var.zones
 
   redis_configuration {
     maxmemory_reserved              = var.maxmemory_reserved
