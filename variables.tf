@@ -46,5 +46,5 @@ variable "maxmemory_delta" {
 
 variable "availability_zones" {
   type    = list(any)
-  default = []
+  default = null
 }
