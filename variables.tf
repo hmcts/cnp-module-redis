@@ -43,3 +43,8 @@ variable "maxfragmentationmemory_reserved" {
 variable "maxmemory_delta" {
   default = "200"
 }
+
+variable "availability_zones" {
+  type    = list(any)
+  default = null
+}

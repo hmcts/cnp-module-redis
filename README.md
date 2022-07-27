@@ -13,6 +13,7 @@ The following parameters are required by the module
 - `env` this is used to differentiate the environments e.g dev, prod, test etc
 - `subnetid` the id of the subnet in which to create the Redis instance
 - `common_tags` tags that need to be applied to every resource group, passed through by the jenkins-library
+- `availability_zones` defaults to `null` Specifies a list of Availability Zones in which this Redis Cache should be located. Changing this forces a new Redis Cache to be created.
 
 ### Output
 
