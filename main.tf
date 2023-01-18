@@ -15,6 +15,7 @@ resource "azurerm_redis_cache" "redis" {
   subnet_id           = var.subnetid
   enable_non_ssl_port = false
   minimum_tls_version = var.minimum_tls_version
+  redis_version       = var.redis_version
   zones               = var.availability_zones
 
   redis_configuration {
