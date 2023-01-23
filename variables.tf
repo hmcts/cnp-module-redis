@@ -29,6 +29,16 @@ variable "minimum_tls_version" {
   description = "The minimum TLS version"
 }
 
+variable "family" {
+  default     = "P"
+  description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
+}
+
+variable "sku_name" {
+  default     = "Premium"
+  description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
+}
+
 variable "capacity" {
   default     = "1"
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
@@ -65,4 +75,24 @@ variable "redis_version" {
   type        = string
   default     = "4"
   description = "Redis version to be deployed 4 or 6 (4 is deprecated)"
+}
+
+variable "private_endpoint_enabled" {
+  default     = false
+  description = "Deploy using a private endpoint rather than vnet integration (recommended)"
+}
+
+variable "public_network_access_enabled" {
+  default     = true
+  description = "Whether or not public network access is allowed for this Redis Cache. `true` means this resource could be accessed by both public and private endpoint. `false` means only private endpoint access is allowed. Defaults to `true`."
+}
+
+variable "private_endpoint_subnet" {
+  default     = ""
+  description = "Specify your own subnet for private link integration, if you don't specify one then it will be calculated for you."
+}
+
+variable "business_area" {
+  default     = "cft"
+  description = "business_area name - sds or cft"
 }

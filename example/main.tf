@@ -12,6 +12,12 @@ module "redis" {
   subnetid      = data.azurerm_subnet.redis_subnet.id
   common_tags   = module.tags.common_tags
   redis_version = "6"
+  business_area = "cft"
+  family        = "C"
+  sku_name      = "Basic"
+
+  private_endpoint_enabled      = true
+  public_network_access_enabled = false
 }
 
 # projects run on Jenkins do not need this module should and should just pass through var.common_tags instead
