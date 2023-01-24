@@ -16,6 +16,7 @@ variable "env" {
 variable "subnetid" {
   type        = string
   description = "Subnet to deploy the Redis instance to"
+  default     = ""
 }
 
 variable "common_tags" {
