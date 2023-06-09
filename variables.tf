@@ -97,3 +97,9 @@ variable "business_area" {
   default     = "cft"
   description = "business_area name - sds or cft"
 }
+
+variable "resourcegroup_name" {
+  description = "Name of existing resource group to deploy resources into"
+  type        = string
+  default     = null
+}
