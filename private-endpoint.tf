@@ -15,8 +15,8 @@ data "azurerm_subnet" "private_endpoint_subnet" {
 resource "azurerm_private_endpoint" "this" {
   count               = var.private_endpoint_enabled == true ? 1 : 0
   name                = "${var.product}-${var.env}"
-  resource_group_name = azurerm_resource_group.cache-resourcegroup[0].name
-  location            = azurerm_resource_group.cache-resourcegroup[0].location
+  resource_group_name = var.resource_group_name != null ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
+  location            = var.location
   subnet_id           = var.private_endpoint_subnet != "" ? var.private_endpoint_subnet : data.azurerm_subnet.private_endpoint_subnet[0].id
 
   private_service_connection {
