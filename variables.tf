@@ -98,7 +98,7 @@ variable "business_area" {
   description = "business_area name - sds or cft"
 }
 
-variable "resourcegroup_name" {
+variable "resource_group_name" {
   description = "Name of existing resource group to deploy resources into"
   type        = string
   default     = null
