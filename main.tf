@@ -10,12 +10,6 @@ resource "azurerm_redis_cache" "redis" {
   name                = "${var.product}-${var.env}"
   location            = azurerm_resource_group.cache-resourcegroup.location
   resource_group_name = var.resourcegroup_name ? var.resourcegroup_name : azurerm_resource_group.cache-resourcegroup[0].name
-  resource "aci_aaa_domain" "example" {
-    name       = "example"
-    annotation = "example"
-    name_alias = "example"
-  }
-
   capacity                      = var.capacity
   family                        = var.family
   sku_name                      = var.sku_name
