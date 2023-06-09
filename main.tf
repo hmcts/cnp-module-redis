@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 
 resource "azurerm_redis_cache" "redis" {
   name                          = "${var.product}-${var.env}"
-  location                      = azurerm_resource_group.cache-resourcegroup.location
+  location                      = azurerm_resource_group.cache-resourcegroup[0].location
   resource_group_name           = var.resource_group_name ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
   capacity                      = var.capacity
   family                        = var.family
