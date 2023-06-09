@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "cache-resourcegroup" {
-  count    = !var.resource_group_name ? 1 : 0
+  count    = var.resource_group_name  == null ? 1 : 0
   name     = "${var.product}-cache-${var.env}"
   location = var.location
 
