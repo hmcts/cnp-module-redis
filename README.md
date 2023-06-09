@@ -69,6 +69,7 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 | <a name="input_product"></a> [product](#input\_product) | https://hmcts.github.io/glossary/#platform | `string` | n/a | yes |
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Whether or not public network access is allowed for this Redis Cache. `true` means this resource could be accessed by both public and private endpoint. `false` means only private endpoint access is allowed. Defaults to `true`. | `bool` | `true` | no |
 | <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Redis version to be deployed 4 or 6 (4 is deprecated) | `string` | `"4"` | no |
+| <a name="input_resourcegroup_name"></a> [resourcegroup\_name](#input\_resourcegroup\_name) | Name of existing resource group to deploy resources into | `string` | `null` | no |
 | <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`. | `string` | `"Premium"` | no |
 | <a name="input_subnetid"></a> [subnetid](#input\_subnetid) | Subnet to deploy the Redis instance to | `string` | `""` | no |
 
