@@ -1,4 +1,5 @@
 resource "azurerm_resource_group" "cache-resourcegroup" {
+  count    = !var.resource_group_name ? 1 : 0
   name     = "${var.product}-cache-${var.env}"
   location = var.location
 
@@ -8,7 +9,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 resource "azurerm_redis_cache" "redis" {
   name                          = "${var.product}-${var.env}"
   location                      = azurerm_resource_group.cache-resourcegroup.location
-  resource_group_name           = azurerm_resource_group.cache-resourcegroup.name
+  resource_group_name           = var.resource_group_name ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
   capacity                      = var.capacity
   family                        = var.family
   sku_name                      = var.sku_name
