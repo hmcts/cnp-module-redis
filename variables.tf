@@ -97,3 +97,9 @@ variable "business_area" {
   default     = "cft"
   description = "business_area name - sds or cft"
 }
+
+variable "rdb_backup_enabled" {
+  default     = false
+  description = "Whether you want to enable backup "
+
+}
