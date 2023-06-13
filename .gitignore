@@ -2,3 +2,8 @@
 .kitchen
 .terraform
 *.lock
+
+terraform.tfstate*
+tfplan
+.terraform.lock.hcl
+.terraform.tfstate.lock.info

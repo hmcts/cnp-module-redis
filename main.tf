@@ -1,21 +1,23 @@
 resource "azurerm_resource_group" "cache-resourcegroup" {
+  count    = var.resource_group_name == null ? 1 : 0
   name     = "${var.product}-cache-${var.env}"
   location = var.location
-
-  tags = var.common_tags
+  tags     = var.common_tags
 }
 
 resource "azurerm_redis_cache" "redis" {
-  name                = "${var.product}-${var.env}"
-  location            = azurerm_resource_group.cache-resourcegroup.location
-  resource_group_name = azurerm_resource_group.cache-resourcegroup.name
-  capacity            = var.capacity
-  family              = "P"
-  sku_name            = "Premium"
-  subnet_id           = var.subnetid
-  enable_non_ssl_port = false
-  minimum_tls_version = var.minimum_tls_version
-  zones               = var.availability_zones
+  name                          = "${var.product}-${var.env}"
+  location                      = var.location
+  resource_group_name           = var.resource_group_name != null ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
+  capacity                      = var.capacity
+  family                        = var.family
+  sku_name                      = var.sku_name
+  subnet_id                     = var.private_endpoint_enabled ? null : var.subnetid
+  enable_non_ssl_port           = false
+  minimum_tls_version           = var.minimum_tls_version
+  public_network_access_enabled = var.public_network_access_enabled
+  redis_version                 = var.redis_version
+  zones                         = var.availability_zones
 
   redis_configuration {
     maxmemory_reserved              = var.maxmemory_reserved
