@@ -64,7 +64,7 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 | <a name="input_maxmemory_policy"></a> [maxmemory\_policy](#input\_maxmemory\_policy) | How Redis will select what to remove when maxmemory is reached | `string` | `"volatile-lru"` | no |
 | <a name="input_maxmemory_reserved"></a> [maxmemory\_reserved](#input\_maxmemory\_reserved) | Value in megabytes reserved for non-cache usage e.g. failover | `string` | `"642"` | no |
 | <a name="input_minimum_tls_version"></a> [minimum\_tls\_version](#input\_minimum\_tls\_version) | The minimum TLS version | `string` | `"1.2"` | no |
-| <a name="input_name"></a> [name](#input\_name) | Override the default name of `$product-$component`, useful when upgrading versions | `string` | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | Override the default name of `$product-$env`, useful when upgrading versions | `string` | `null` | no |
 | <a name="input_private_endpoint_enabled"></a> [private\_endpoint\_enabled](#input\_private\_endpoint\_enabled) | Deploy using a private endpoint rather than vnet integration (recommended) | `bool` | `false` | no |
 | <a name="input_private_endpoint_subnet"></a> [private\_endpoint\_subnet](#input\_private\_endpoint\_subnet) | Specify your own subnet for private link integration, if you don't specify one then it will be calculated for you. | `string` | `""` | no |
 | <a name="input_product"></a> [product](#input\_product) | https://hmcts.github.io/glossary/#platform | `string` | n/a | yes |
