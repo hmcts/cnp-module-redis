@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = null
+  description = "Override the default name of `$product-$env`, useful when upgrading versions"
+}
+
 variable "product" {
   type        = string
   description = "https://hmcts.github.io/glossary/#platform"
