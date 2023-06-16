@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 }
 
 resource "azurerm_redis_cache" "redis" {
-  name                          = "${var.product}-${var.env}"
+  name                          = var.name != null ? var.name : "${var.product}-${var.env}"
   location                      = var.location
   resource_group_name           = var.resource_group_name != null ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
   capacity                      = var.capacity
