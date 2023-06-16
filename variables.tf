@@ -1,7 +1,7 @@
 variable "name" {
   type        = string
   default     = null
-  description = "Override the default name of `$product-$component`, useful when upgrading versions"
+  description = "Override the default name of `$product-$env`, useful when upgrading versions"
 }
 
 variable "product" {
