@@ -1,7 +1,7 @@
 variable "name" {
   type        = string
   default     = null
-  description = "A custom name for the resource"
+  description = "Override the default name of `$product-$component`, useful when upgrading versions"
 }
 
 variable "product" {
