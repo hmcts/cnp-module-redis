@@ -1,3 +1,9 @@
+variable "name" {
+  type        = string
+  default     = null
+  description = "A custom name for the resource"
+}
+
 variable "product" {
   type        = string
   description = "https://hmcts.github.io/glossary/#platform"
