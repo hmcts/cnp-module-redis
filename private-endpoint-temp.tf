@@ -1,18 +1,18 @@
 locals {
-  vnet_rg_name = var.business_area == "sds" ? "ss-${var.env}-network-rg" : "cft-${var.env}-network-rg"
-  vnet_name    = var.business_area == "sds" ? "ss-${var.env}-vnet" : "cft-${var.env}-vnet"
-  subnet_name  = var.business_area == "sds" ? "iaas" : "private-endpoints"
+  vnet_rg_name_temp = var.business_area == "sds" ? "ss-${var.env}-network-rg" : "cft-${var.env}-network-rg"
+  vnet_name_temp    = var.business_area == "sds" ? "ss-${var.env}-vnet" : "cft-${var.env}-vnet"
+  subnet_name_temp  = var.business_area == "sds" ? "iaas" : "private-endpoints"
 }
 
 data "azurerm_subnet" "private_endpoint_subnet_temp" {
-  name                 = local.subnet_name
-  resource_group_name  = local.vnet_rg_name
-  virtual_network_name = local.vnet_name
+  name                 = local.subnet_name_temp
+  resource_group_name  = local.vnet_rg_name_temp
+  virtual_network_name = local.vnet_name_temp
 
   count = var.private_endpoint_enabled == true && var.product == "rpx-mc-redis6" ? (var.private_endpoint_subnet == "" ? 1 : 0) : 0
 }
 
-resource "azurerm_private_endpoint" "this" {
+resource "azurerm_private_endpoint" "this_temp" {
   count               = var.private_endpoint_enabled == true && var.product == "rpx-mc-redis6" ? 1 : 0
   name                = "${var.product}-${var.env}-temp"
   resource_group_name = var.resource_group_name != null ? var.resource_group_name : azurerm_resource_group.cache-resourcegroup[0].name
