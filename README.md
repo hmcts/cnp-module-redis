@@ -4,6 +4,16 @@ This repository contains the module that enables you to create a Redis PaaS inst
 
 ## Usage
 
+### Recommended example for cost optimisation
+
+Premium redis PaaS instance are very expensive, care **must** be taken when using them and only used in required environments.
+This should only be production unless you **really** need it in a different environment.
+
+prod.tfvars
+```
+sku_name = "Premium"
+```
+
 The following example shows how to use the module to create a Redis PaaS instance and expose
 the host, port and access key as environment variables in another module.
 
@@ -16,7 +26,7 @@ module "redis" {
   common_tags              = var.common_tags
   redis_version            = "6"
   business_area            = "cft" # cft or sds
-
+  sku_name                 = var.sku_name
   private_endpoint_enabled      = true
   public_network_access_enabled = false
 }
