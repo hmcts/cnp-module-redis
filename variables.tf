@@ -42,7 +42,6 @@ variable "family" {
 }
 
 variable "sku_name" {
-  default     = "Premium"
   description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
 }
 
