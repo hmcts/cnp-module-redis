@@ -51,6 +51,8 @@ module "redis" {
   redis_version            = "6"
   business_area            = "cft" # cft or sds
   sku_name                 = var.sku_name
+  family                   = var.family
+  capacity                 = var.capacity
   private_endpoint_enabled      = true
   public_network_access_enabled = false
 }
