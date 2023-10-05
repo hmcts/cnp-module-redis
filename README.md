@@ -4,6 +4,40 @@ This repository contains the module that enables you to create a Redis PaaS inst
 
 ## Usage
 
+### Recommended example for cost optimisation
+
+Premium redis PaaS instance are very expensive, care **must** be taken when using them and only used in required environments.
+This should only be production unless you **really** need it in a different environment.
+
+variables.tf
+
+```
+variable "family" {
+  description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
+}
+
+variable "sku_name" {
+  description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
+}
+
+variable "capacity" {
+  description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
+}
+```
+
+prod.tfvars
+```
+sku_name = "Premium"
+family   = "P"
+capacity = "1"
+```
+
+aat.tfvars
+```
+sku_name = "Standard"
+family   = "C"
+capacity = "3"
+```
 The following example shows how to use the module to create a Redis PaaS instance and expose
 the host, port and access key as environment variables in another module.
 
@@ -16,7 +50,9 @@ module "redis" {
   common_tags              = var.common_tags
   redis_version            = "6"
   business_area            = "cft" # cft or sds
-
+  sku_name                 = var.sku_name
+  family                   = var.family
+  capacity                 = var.capacity
   private_endpoint_enabled      = true
   public_network_access_enabled = false
 }
@@ -54,10 +90,10 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | Specifies a list of Availability Zones in which this Redis Cache should be located. Changing this forces a new Redis Cache to be created. | `list(any)` | `null` | no |
 | <a name="input_business_area"></a> [business\_area](#input\_business\_area) | business\_area name - sds or cft | `string` | `"cft"` | no |
-| <a name="input_capacity"></a> [capacity](#input\_capacity) | The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5 | `string` | `"1"` | no |
+| <a name="input_capacity"></a> [capacity](#input\_capacity) | The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5 | `string` | `"3"` | no |
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | Map of tags to tag all resources with | `map(string)` | n/a | yes |
 | <a name="input_env"></a> [env](#input\_env) | Environment to deploy to | `string` | n/a | yes |
-| <a name="input_family"></a> [family](#input\_family) | The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more. | `string` | `"P"` | no |
+| <a name="input_family"></a> [family](#input\_family) | The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more. | `string` | `"C"` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure datacenter location | `string` | n/a | yes |
 | <a name="input_maxfragmentationmemory_reserved"></a> [maxfragmentationmemory\_reserved](#input\_maxfragmentationmemory\_reserved) | Value in megabytes reserved to accommodate for memory fragmentation | `string` | `"642"` | no |
 | <a name="input_maxmemory_delta"></a> [maxmemory\_delta](#input\_maxmemory\_delta) | The max-memory delta for this Redis instance. | `string` | `"642"` | no |
@@ -71,7 +107,7 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Whether or not public network access is allowed for this Redis Cache. `true` means this resource could be accessed by both public and private endpoint. `false` means only private endpoint access is allowed. Defaults to `true`. | `bool` | `true` | no |
 | <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Redis version to be deployed 4 or 6 (4 is deprecated) | `string` | `"4"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of existing resource group to deploy resources into | `string` | `null` | no |
-| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`. | `string` | `"Premium"` | no |
+| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`. | `string` | `"Basic"` | no |
 | <a name="input_subnetid"></a> [subnetid](#input\_subnetid) | Subnet to deploy the Redis instance to | `string` | `""` | no |
 
 ## Outputs
