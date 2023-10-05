@@ -9,11 +9,35 @@ This repository contains the module that enables you to create a Redis PaaS inst
 Premium redis PaaS instance are very expensive, care **must** be taken when using them and only used in required environments.
 This should only be production unless you **really** need it in a different environment.
 
+variables.tf
+
+```
+variable "family" {
+  description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
+}
+
+variable "sku_name" {
+  description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
+}
+
+variable "capacity" {
+  description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
+}
+```
+
 prod.tfvars
 ```
 sku_name = "Premium"
+family   = "P"
+capacity = "1"
 ```
 
+aat.tfvars
+```
+sku_name = "Standard"
+family   = "C"
+capacity = "3"
+```
 The following example shows how to use the module to create a Redis PaaS instance and expose
 the host, port and access key as environment variables in another module.
 
