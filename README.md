@@ -13,28 +13,36 @@ variables.tf
 
 ```
 variable "family" {
-  default     = "C"
+  default     = "P"
   description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
 }
 
 variable "sku_name" {
-  default     = "Basic"
+  default     = "Premium"
   description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
 }
 
 variable "capacity" {
-  default     = "3"
+  default     = "1"
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }
 ```
+The following values are recommended for use in lower environments when using a **Basic** sku.
 
-prod.tfvars
+ithc.tfvars
 ```
-sku_name = "Premium"
-family   = "P"
-capacity = "1"
+sku_name = "Basic"
+family   = "C"
+capacity = "3"
 ```
+The following values are recommended for use in lower environments when using a **Standard** sku.
 
+demo.tfvars
+```
+sku_name = "Standard"
+family   = "C"
+capacity = "3"
+```
 
 The following example shows how to use the module to create a Redis PaaS instance and expose the host, port and access key as environment variables in another module.
 
