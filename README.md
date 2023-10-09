@@ -13,12 +13,12 @@ variables.tf
 
 ```
 variable "family" {
-  default     = "P"
+  default     = "C"
   description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
 }
 
 variable "sku_name" {
-  default     = "Premium"
+  default     = "Basic"
   description = "The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`."
 }
 
@@ -27,25 +27,17 @@ variable "capacity" {
   description = "The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5"
 }
 ```
-The following values are recommended for use in lower environments when using a **Basic** sku.
 
-ithc.tfvars
-```
-sku_name = "Basic"
-family   = "C"
-capacity = "3"
-```
-The following values are recommended for use in lower environments when using a **Standard** sku.
+The following values are recommended for use in the production environment:
 
-demo.tfvars
+prod.tfvars
 ```
-sku_name = "Standard"
-family   = "C"
-capacity = "3"
+sku_name = "Premium"
+family   = "P"
+capacity = "1"
 ```
 
-The following example shows how to use the module to create a Redis PaaS instance and expose the host, port and access key as environment variables in another module.
-
+redis.tf
 ```terraform
 module "redis" {
   source                   = "git@github.com:hmcts/cnp-module-redis?ref=master"
@@ -58,6 +50,7 @@ module "redis" {
   sku_name                 = var.sku_name
   family                   = var.family
   capacity                 = var.capacity
+
   private_endpoint_enabled      = true
   public_network_access_enabled = false
 }
@@ -68,6 +61,8 @@ resource "azurerm_key_vault_secret" "redis_access_key" {
   key_vault_id = data.azurerm_key_vault.vault.id
 }
 ```
+
+If you need to increase cache size take a look at the [pricing page](https://azure.microsoft.com/en-gb/pricing/details/cache/) for available options and cost impact.
 
 ### Configuration
 
