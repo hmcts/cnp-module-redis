@@ -11,7 +11,7 @@ This should only be production unless you **really** need it in a different envi
 
 variables.tf
 
-```
+```terraform
 variable "family" {
   default     = "C"
   description = "The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more."
@@ -31,7 +31,7 @@ variable "capacity" {
 The following values are recommended for use in the production environment:
 
 prod.tfvars
-```
+```tfvars
 sku_name = "Premium"
 family   = "P"
 capacity = "1"
