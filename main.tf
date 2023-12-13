@@ -24,6 +24,7 @@ resource "azurerm_redis_cache" "redis" {
     maxfragmentationmemory_reserved = var.maxfragmentationmemory_reserved
     maxmemory_delta                 = var.maxmemory_delta
     maxmemory_policy                = var.maxmemory_policy
+    aof_backup_enabled              = null
   }
 
   tags = var.common_tags
