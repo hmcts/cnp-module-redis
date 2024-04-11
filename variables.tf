@@ -111,6 +111,6 @@ variable "resource_group_name" {
 }
 
 variable "rdb_backup_enabled" {
-  type = string
-  default = "false"
+  type = bool
+  default = false
 }
