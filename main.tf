@@ -27,4 +27,31 @@ resource "azurerm_redis_cache" "redis" {
   }
 
   tags = var.common_tags
+
+  # Create storage account if rdb_backup_enabled is true
+  dynamic "redis_rdb" {
+    for_each = var.rdb_backup_enabled == true ? [1] : []
+    content {
+      storage_account_name      = "${var.product}${var.env}redisrdb"
+      storage_account_replication_type = "LRS"
+      storage_account_tier      = "Standard"
+      storage_account_kind      = "StorageV2"
+
+      # Connection string for the storage account
+      storage_account_connection_string = azurerm_storage_account.redis_rdb_connection_string[0].primary_connection_string
+    }
+  }
+}
+
+# Create storage account if rdb_backup_enabled is true
+resource "azurerm_storage_account" "redis_rdb_connection_string" {
+  count                 = var.rdb_backup_enabled == true ? 1 : 0
+  name                  = "${var.product}${var.env}redisrdb"
+  resource_group_name   = azurerm_resource_group.cache-resourcegroup[0].name
+  location              = var.location
+  account_tier          = "Standard"
+  account_replication_type = "LRS"
+  account_kind          = "StorageV2"
+
+  tags = var.common_tags
 }
