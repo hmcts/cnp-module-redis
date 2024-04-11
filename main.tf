@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 
 resource "azurerm_storage_account" "backup" {
   count                    = var.rdb_backup_enabled ? 1 : 0
-  name                     = "${var.product}${var.env}rediscachesa"
+  name                     = "plumtestrediscachesa"
   resource_group_name      = azurerm_resource_group.cache-resourcegroup[0].name
   location                 = var.location
   account_tier             = "Standard"
