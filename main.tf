@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 
 resource "azurerm_storage_account" "backup" {
   count                    = var.rdb_backup_enabled ? 1 : 0
-  name                     = "${var.rdb_storage_account_name_prefix}${var.env}redissa"
+  name                     = var.rdb_backup_enabled ? "${var.rdb_storage_account_name_prefix}${var.env}redissa" : null
   resource_group_name      = azurerm_resource_group.cache-resourcegroup[0].name
   location                 = var.location
   account_tier             = "Standard"
