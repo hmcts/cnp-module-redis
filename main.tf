@@ -5,9 +5,13 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
   tags     = var.common_tags
 }
 
+locals {
+  redis_cache_sa_name = replace("${var.product}${var.env}", "/[^a-zA-Z]/g", "")
+}
+
 resource "azurerm_storage_account" "backup" {
   count                    = var.rdb_backup_enabled ? 1 : 0
-  name                     = "plumtestrediscachesa"
+  name                     = "${local.redis_cache_sa_name}rediscachesa"
   resource_group_name      = azurerm_resource_group.cache-resourcegroup[0].name
   location                 = var.location
   account_tier             = "Standard"
