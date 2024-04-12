@@ -116,7 +116,11 @@ variable "rdb_backup_enabled" {
 }
 
  variable "rdb_backup_frequency" {
+  type = string
+  default = "30"
  }
 
  variable "rdb_storage_account_name_prefix" {
+  type = string
+  default = "placeholder"
  }
