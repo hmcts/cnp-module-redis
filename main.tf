@@ -6,12 +6,12 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 }
 
 locals {
-  redis_cache_sa_name = replace("${var.product}${var.env}", "/[^a-zA-Z]/g", "")
+  redis_cache_sa_name = regex(replace("${var.product}${var.env}", "/[^a-z0-9]/g", ""), "^[a-z0-9]{3,24}$")
 }
 
 resource "azurerm_storage_account" "backup" {
   count                    = var.rdb_backup_enabled ? 1 : 0
-  name                     = "${local.redis_cache_sa_name}rediscachesa"
+  name                     = "${local.redis_cache_sa_name}redissa"
   resource_group_name      = azurerm_resource_group.cache-resourcegroup[0].name
   location                 = var.location
   account_tier             = "Standard"
