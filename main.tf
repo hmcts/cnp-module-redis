@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "cache-resourcegroup" {
 }
 
 locals {
-  redis_cache_sa_name = regex(replace("${var.product}${var.env}", "/[^a-z0-9]/g", ""), "^[a-z0-9]{3,24}$")
+  redis_cache_sa_name = regex(replace(split("-", "${var.product}${var.env}")[0], "/[^a-z0-9]/g", ""), "^[a-z0-9]{3,24}$")
 }
 
 resource "azurerm_storage_account" "backup" {
