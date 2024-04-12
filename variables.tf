@@ -118,5 +118,5 @@ variable "rdb_backup_enabled" {
  variable "rdb_backup_frequency" {
  }
 
- variable "rdb_storage_account_name" {
+ variable "rdb_storage_account_name_prefix" {
  }
