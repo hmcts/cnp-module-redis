@@ -114,3 +114,6 @@ variable "rdb_backup_enabled" {
   type = bool
   default = false
 }
+
+ variable "rdb_backup_frequency" {
+ }

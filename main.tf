@@ -36,6 +36,7 @@ resource "azurerm_redis_cache" "redis" {
     maxmemory_policy                = var.maxmemory_policy
     rdb_backup_enabled              = var.rdb_backup_enabled
     rdb_storage_connection_string   = var.rdb_backup_enabled ? azurerm_storage_account.backup[0].primary_connection_string : null
+    rdb_backup_frequency            = var.rdb_backup_enabled ? var.rdb_backup_frequency : null
   }
 
   tags = var.common_tags
