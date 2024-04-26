@@ -120,6 +120,11 @@ variable "rdb_backup_enabled" {
   default = "30"
  }
 
+variable "rdb_backup_max_snapshot_count" {
+  type = string
+  default = "5"
+ }
+
  variable "rdb_storage_account_name_prefix" {
   type = string
   default = "placeholder"
