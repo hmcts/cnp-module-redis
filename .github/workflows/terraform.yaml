@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  ARM_SUBSCRIPTION_ID: b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb
+
 jobs:
   terraform:
     name: "terraform"

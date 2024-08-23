@@ -13,7 +13,6 @@ resource "azurerm_redis_cache" "redis" {
   family                        = var.family
   sku_name                      = var.sku_name
   subnet_id                     = var.private_endpoint_enabled ? null : var.subnetid
-  enable_non_ssl_port           = false
   minimum_tls_version           = var.minimum_tls_version
   public_network_access_enabled = var.public_network_access_enabled
   redis_version                 = var.redis_version
