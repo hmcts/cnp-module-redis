@@ -92,6 +92,7 @@ If you need to increase cache size take a look at the [pricing page](https://azu
 | <a name="input_business_area"></a> [business\_area](#input\_business\_area) | business\_area name - sds or cft | `string` | `"cft"` | no |
 | <a name="input_capacity"></a> [capacity](#input\_capacity) | The size of the Redis cache to deploy. Valid values are 1, 2, 3, 4, 5 | `string` | `"1"` | no |
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | Map of tags to tag all resources with | `map(string)` | n/a | yes |
+| <a name="input_data_persistence_authentication_method"></a> [data\_persistence\_authentication\_method](#input\_data\_persistence\_authentication\_method) | n/a | `string` | `"SAS"` | no |
 | <a name="input_env"></a> [env](#input\_env) | Environment to deploy to | `string` | n/a | yes |
 | <a name="input_family"></a> [family](#input\_family) | The SKU family/pricing group to use. Valid values are `C` (for Basic/Standard SKU family) and `P` (for Premium). Use P for higher availability, but beware it costs a lot more. | `string` | `"P"` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure datacenter location | `string` | n/a | yes |

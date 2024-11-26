@@ -19,6 +19,7 @@ resource "azurerm_redis_cache" "redis" {
   zones                         = var.availability_zones
 
   redis_configuration {
+    data_persistence_authentication_method = var.data_persistence_authentication_method
     maxmemory_reserved              = var.maxmemory_reserved
     maxfragmentationmemory_reserved = var.maxfragmentationmemory_reserved
     maxmemory_delta                 = var.maxmemory_delta

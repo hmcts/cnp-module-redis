@@ -109,3 +109,11 @@ variable "resource_group_name" {
   type        = string
   default     = null
 }
+
+variable "data_persistence_authentication_method" {
+  default = "SAS"
+  validation {
+    condition     = contains(["SAS", "ManagedIdentity"], var.data_persistence_authentication_method)
+    error_message = "Must be either \"SAS\" or \"ManagedIdentity\"."
+  }
+}
