@@ -109,6 +109,7 @@ If you need to increase cache size take a look at the [pricing page](https://azu
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of existing resource group to deploy resources into | `string` | `null` | no |
 | <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | The SKU of Redis to use. Possible values are `Basic`, `Standard` and `Premium`. | `string` | `"Premium"` | no |
 | <a name="input_subnetid"></a> [subnetid](#input\_subnetid) | Subnet to deploy the Redis instance to | `string` | `""` | no |
+| <a name="input_data_persistence_authentication_method"></a> [data\_persistence\_authentication\_method](#input\_data\_persistence\_authentication\_method) | Preferred auth method to communicate to storage account used for data persistence | `string` | `"SAS"` | no |
 
 ## Outputs
 
