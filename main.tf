@@ -23,21 +23,22 @@ resource "azurerm_redis_cache" "redis" {
   family                        = var.family
   sku_name                      = var.sku_name
   subnet_id                     = var.private_endpoint_enabled ? null : var.subnetid
-  enable_non_ssl_port           = false
+  non_ssl_port_enabled          = false
   minimum_tls_version           = var.minimum_tls_version
   public_network_access_enabled = var.public_network_access_enabled
   redis_version                 = var.redis_version
   zones                         = var.availability_zones
 
   redis_configuration {
-    maxmemory_reserved              = var.maxmemory_reserved
-    maxfragmentationmemory_reserved = var.maxfragmentationmemory_reserved
-    maxmemory_delta                 = var.maxmemory_delta
-    maxmemory_policy                = var.maxmemory_policy
-    rdb_backup_enabled              = var.rdb_backup_enabled
-    rdb_storage_connection_string   = var.rdb_backup_enabled ? azurerm_storage_account.backup[0].primary_connection_string : null
-    rdb_backup_frequency            = var.rdb_backup_enabled ? var.rdb_backup_frequency : null
-    rdb_backup_max_snapshot_count   = var.rdb_backup_enabled ? var.rdb_backup_max_snapshot_count : null
+    data_persistence_authentication_method = var.data_persistence_authentication_method
+    maxmemory_reserved                     = var.maxmemory_reserved
+    maxfragmentationmemory_reserved        = var.maxfragmentationmemory_reserved
+    maxmemory_delta                        = var.maxmemory_delta
+    maxmemory_policy                       = var.maxmemory_policy
+    rdb_backup_enabled                     = var.rdb_backup_enabled
+    rdb_storage_connection_string          = var.rdb_backup_enabled ? azurerm_storage_account.backup[0].primary_connection_string : null
+    rdb_backup_frequency                   = var.rdb_backup_enabled ? var.rdb_backup_frequency : null
+    rdb_backup_max_snapshot_count          = var.rdb_backup_enabled ? var.rdb_backup_max_snapshot_count : null
   }
 
   tags = var.common_tags

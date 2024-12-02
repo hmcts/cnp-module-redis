@@ -111,21 +111,29 @@ variable "resource_group_name" {
 }
 
 variable "rdb_backup_enabled" {
-  type = bool
+  type    = bool
   default = false
 }
 
- variable "rdb_backup_frequency" {
-  type = string
+variable "rdb_backup_frequency" {
+  type    = string
   default = "30"
- }
+}
 
 variable "rdb_backup_max_snapshot_count" {
-  type = string
+  type    = string
   default = "5"
- }
+}
 
- variable "rdb_storage_account_name_prefix" {
-  type = string
+variable "rdb_storage_account_name_prefix" {
+  type    = string
   default = "placeholder"
- }
+}
+
+variable "data_persistence_authentication_method" {
+  default = "SAS"
+  validation {
+    condition     = contains(["SAS", "ManagedIdentity"], var.data_persistence_authentication_method)
+    error_message = "Must be either \"SAS\" or \"ManagedIdentity\"."
+  }
+}
