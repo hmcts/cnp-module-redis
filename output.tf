@@ -12,3 +12,8 @@ output "redis_port" {
   value       = azurerm_redis_cache.redis.ssl_port
   description = "SSL port to connect to redis with"
 }
+
+output "redis_id" {
+  value = azurerm_redis_cache.redis.id
+  description = "Resource ID of the Redis Cache"
+}
