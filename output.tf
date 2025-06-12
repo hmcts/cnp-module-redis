@@ -14,6 +14,6 @@ output "redis_port" {
 }
 
 output "redis_id" {
-  value = azurerm_redis_cache.redis.id
+  value       = azurerm_redis_cache.redis.id
   description = "Resource ID of the Redis Cache"
 }
