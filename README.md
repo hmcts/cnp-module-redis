@@ -116,6 +116,7 @@ If you need to increase cache size take a look at the [pricing page](https://azu
 |------|-------------|
 | <a name="output_access_key"></a> [access\_key](#output\_access\_key) | Primary access key to connect to redis with |
 | <a name="output_host_name"></a> [host\_name](#output\_host\_name) | Host name of the Redis cache |
+| <a name="output_redis_id"></a> [redis\_id](#output\_redis\_id) | Resource ID of the Redis Cache |
 | <a name="output_redis_port"></a> [redis\_port](#output\_redis\_port) | SSL port to connect to redis with |
 <!-- END_TF_DOCS -->
 
